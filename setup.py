@@ -10,7 +10,10 @@ from setuptools import setup
 # Otherwise, use the pre-built (by someone who has Cython, i.e. me) wrapper `.cpp` files.
 try:
     from Cython.Build import cythonize
-    ext_modules = cythonize(['pydensecrf/eigen.pyx', 'pydensecrf/densecrf.pyx'])
+
+    extensions = ['pydensecrf/eigen.pyx', 'pydensecrf/densecrf.pyx']
+    compiler_directives = {'language_level': '2'}
+    ext_modules = cythonize(extensions, compiler_directives=compiler_directives)
 except ImportError:
     from setuptools.extension import Extension
     ext_modules = [
